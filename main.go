@@ -21,6 +21,26 @@ func initDB() {
     if err != nil {
         log.Fatal(err)
     }
+
+	createTables := `
+    CREATE TABLE IF NOT EXISTS machine_type (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        description TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS machine (
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        serial_number VARCHAR(50) UNIQUE NOT NULL,
+        machine_type_id INT REFERENCES machine_type(id) ON DELETE SET NULL,
+        status VARCHAR(50) DEFAULT 'active'
+    );
+    `
+	_, err = db.Exec(createTables)
+    if err != nil {
+        log.Fatal(err)
+    }
 }
 
 func getMachineTypes(w http.ResponseWriter, r *http.Request) {
