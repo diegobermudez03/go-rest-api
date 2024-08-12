@@ -1,6 +1,6 @@
 module github.com/yourusername/go-rest-api
 
-go 1.22.6
+go 1.22.5
 
 require (
 	github.com/gorilla/mux v1.8.1 // indirect
